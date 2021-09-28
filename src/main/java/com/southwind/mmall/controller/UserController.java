@@ -3,6 +3,7 @@ package com.southwind.mmall.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.southwind.mmall.entity.User;
+import com.southwind.mmall.enums.GenderEnum;
 import com.southwind.mmall.service.CartService;
 import com.southwind.mmall.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,16 +35,21 @@ public class UserController {
 
     @PostMapping("/register")
     public String register(User user, Model model){
+        System.out.println(user.getGender()+"==="+user.getGenderCode());
         boolean result = false;
         try {
+            if(user.getGenderCode() == 1){
+                user.setGender(GenderEnum.MAN);
+            }
+            if(user.getGenderCode() == 0){
+                user.setGender(GenderEnum.WOMAN);
+            }
             result = userService.save(user);
         } catch (Exception e) {
-            model.addAttribute("error",user.getLoginName()+"已存在!请重新输入!");
+            model.addAttribute("error",user.getLoginName()+"已存在！请重新输入！");
             return "register";
         }
-        if (result){
-            return "login";
-        }
+        if(result) return "login";
         return "register";
     }
     @PostMapping("/login")

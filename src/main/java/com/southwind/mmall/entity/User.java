@@ -10,6 +10,7 @@ import java.io.Serializable;
 import com.southwind.mmall.enums.GenderEnum;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 /**
  * <p>
@@ -21,6 +22,7 @@ import lombok.EqualsAndHashCode;
  */
 @Data
   @EqualsAndHashCode(callSuper = false)
+  @Accessors(chain = true)
     public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -50,6 +52,8 @@ import lombok.EqualsAndHashCode;
      * 性别(1:男 0：女)
      */
       private GenderEnum gender;
+      @TableField(exist = false)
+      private Integer genderCode;
 
       /**
      * 身份证号
